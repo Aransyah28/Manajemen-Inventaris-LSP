@@ -63,8 +63,8 @@ router.get('/categories', verifyToken, async (req, res) => {
   }
 });
 
-// 3. POST /api/items - Menambah Data Barang Baru (Petugas & Admin Only)
-router.post('/', verifyToken, requireRole('admin', 'petugas'), async (req, res) => {
+// 3. POST /api/items - Menambah Data Barang Baru (Petugas Only)
+router.post('/', verifyToken, requireRole('petugas'), async (req, res) => {
   const { item_code, name, category_id, brand, serial_number, total_qty, location, condition_status } = req.body;
 
   if (!item_code || !name || !category_id || !location) {
@@ -103,8 +103,8 @@ router.post('/', verifyToken, requireRole('admin', 'petugas'), async (req, res) 
   }
 });
 
-// 4. PUT /api/items/:id - Memperbarui Data/Kondisi Barang (Petugas & Admin Only)
-router.put('/:id', verifyToken, requireRole('admin', 'petugas'), async (req, res) => {
+// 4. PUT /api/items/:id - Memperbarui Data/Kondisi Barang (Petugas Only)
+router.put('/:id', verifyToken, requireRole('petugas'), async (req, res) => {
   const itemId = req.params.id;
   const { name, brand, total_qty, available_qty, location, condition_status, availability_status } = req.body;
 
@@ -135,8 +135,8 @@ router.put('/:id', verifyToken, requireRole('admin', 'petugas'), async (req, res
   }
 });
 
-// 5. DELETE /api/items/:id - Menghapus Barang (Admin Only)
-router.delete('/:id', verifyToken, requireRole('admin'), async (req, res) => {
+// 5. DELETE /api/items/:id - Menghapus Barang (Petugas Only)
+router.delete('/:id', verifyToken, requireRole('petugas'), async (req, res) => {
   const itemId = req.params.id;
 
   try {

@@ -154,7 +154,7 @@ export default function App() {
     }
   };
 
-  // Handle Hapus Barang (Admin Only)
+  // Handle Hapus Barang (Petugas Only)
   const handleDeleteItem = async (id) => {
     if (!window.confirm('Apakah Anda yakin ingin menghapus barang ini?')) return;
     try {
@@ -278,7 +278,7 @@ export default function App() {
         <div className="container">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
             <h3 style={{ margin: 0, fontSize: '1.1rem', color: '#0f172a' }}>Katalog Inventaris Peralatan Kantor</h3>
-            {(user.role === 'admin' || user.role === 'petugas') && (
+            {user.role === 'petugas' && (
               <button className="btn btn-success" onClick={() => setShowAddItem(!showAddItem)}>
                 {showAddItem ? 'Batal' : 'Tambah Barang Baru'}
               </button>
@@ -330,7 +330,7 @@ export default function App() {
                 <th>Kondisi</th>
                 <th>Stok (Tersedia / Total)</th>
                 <th>Status Ketersediaan</th>
-                {user.role === 'admin' && <th>Aksi</th>}
+                {user.role === 'petugas' && <th>Aksi</th>}
               </tr>
             </thead>
             <tbody>
@@ -344,7 +344,7 @@ export default function App() {
                   <td><span className={`badge ${item.condition_status === 'baik' ? 'badge-success' : 'badge-danger'}`}>{item.condition_status}</span></td>
                   <td><strong>{item.available_qty}</strong> / {item.total_qty} unit</td>
                   <td><span className={`badge ${item.availability_status === 'tersedia' ? 'badge-success' : 'badge-warning'}`}>{item.availability_status}</span></td>
-                  {user.role === 'admin' && (
+                  {user.role === 'petugas' && (
                     <td>
                       <button className="btn btn-danger" onClick={() => handleDeleteItem(item.id)}>Hapus</button>
                     </td>
@@ -361,7 +361,7 @@ export default function App() {
         <div className="container">
           <h3 style={{ margin: '0 0 15px 0', fontSize: '1.1rem', color: '#0f172a' }}>Daftar Transaksi Peminjaman Inventaris</h3>
 
-          {(user.role === 'staff' || user.role === 'admin') && (
+          {user.role === 'staff' && (
             <form onSubmit={handleCreateLoan} style={{ background: '#f8fafc', padding: '15px', borderRadius: '6px', border: '1px solid #e2e8f0', marginBottom: '20px', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px' }}>
               <div style={{ gridColumn: '1 / -1' }}><h4 style={{ margin: 0, color: '#334155' }}>Form Pengajuan Peminjaman (Staff)</h4></div>
               <div>
@@ -402,7 +402,7 @@ export default function App() {
                 <th>Target Kembali</th>
                 <th>Status Transaksi</th>
                 <th>Verifikator</th>
-                {(user.role === 'admin' || user.role === 'petugas') && <th>Aksi Pemrosesan</th>}
+                {user.role === 'petugas' && <th>Aksi Pemrosesan</th>}
               </tr>
             </thead>
             <tbody>
@@ -420,7 +420,7 @@ export default function App() {
                     </span>
                   </td>
                   <td>{loan.approver_name || '-'}</td>
-                  {(user.role === 'admin' || user.role === 'petugas') && (
+                  {user.role === 'petugas' && (
                     <td>
                       {loan.status === 'pending' && (
                         <>
@@ -473,7 +473,7 @@ export default function App() {
               {logs.map(l => (
                 <tr key={l.id}>
                   <td>#{l.id}</td>
-                  <td>{new Date(l.created_at).toLocaleString('id-ID')}</td>
+                  <td>{new Date(l.created_at + 'Z').toLocaleString('id-ID')}</td>
                   <td><strong>{l.user_name || 'System'}</strong></td>
                   <td><span className="badge badge-info">{l.user_role || 'ADMIN'}</span></td>
                   <td><code>{l.action}</code></td>

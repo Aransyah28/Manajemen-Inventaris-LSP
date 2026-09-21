@@ -41,7 +41,7 @@ router.get('/', verifyToken, async (req, res) => {
 });
 
 // 2. POST /api/loans - Staff Mengajukan Permohonan Peminjaman Barang Baru
-router.post('/', verifyToken, async (req, res) => {
+router.post('/', verifyToken, requireRole('staff'), async (req, res) => {
   const { item_id, qty, loan_date, expected_return_date, notes } = req.body;
   const userId = req.user.id;
 
@@ -102,8 +102,8 @@ router.post('/', verifyToken, async (req, res) => {
   }
 });
 
-// 3. PATCH /api/loans/:id/approve - Petugas/Admin Menyetujui Peminjaman & Kurangi Stok Otomatis
-router.patch('/:id/approve', verifyToken, requireRole('admin', 'petugas'), async (req, res) => {
+// 3. PATCH /api/loans/:id/approve - Petugas Menyetujui Peminjaman & Kurangi Stok Otomatis
+router.patch('/:id/approve', verifyToken, requireRole('petugas'), async (req, res) => {
   const loanId = req.params.id;
 
   try {
@@ -165,8 +165,8 @@ router.patch('/:id/approve', verifyToken, requireRole('admin', 'petugas'), async
   }
 });
 
-// 4. PATCH /api/loans/:id/reject - Petugas/Admin Menolak Peminjaman
-router.patch('/:id/reject', verifyToken, requireRole('admin', 'petugas'), async (req, res) => {
+// 4. PATCH /api/loans/:id/reject - Petugas Menolak Peminjaman
+router.patch('/:id/reject', verifyToken, requireRole('petugas'), async (req, res) => {
   const loanId = req.params.id;
   const { rejection_reason } = req.body;
 
@@ -197,7 +197,7 @@ router.patch('/:id/reject', verifyToken, requireRole('admin', 'petugas'), async 
 });
 
 // 5. PATCH /api/loans/:id/return - Memproses Pengembalian Barang & Mengembalikan Kuota Stok
-router.patch('/:id/return', verifyToken, requireRole('admin', 'petugas'), async (req, res) => {
+router.patch('/:id/return', verifyToken, requireRole('petugas'), async (req, res) => {
   const loanId = req.params.id;
 
   try {
