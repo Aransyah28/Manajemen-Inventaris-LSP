@@ -1,0 +1,25 @@
+# Dependensi Node.js
+node_modules/
+frontend/node_modules/
+
+# Berkas Lingkungan & Rahasia (Keamanan Kredensial)
+.env
+*.env.local
+
+# Database SQLite Lokal
+*.db
+*.sqlite
+
+# Berkas Build Output
+dist/
+frontend/dist/
+
+# System & Log Files
+*.log
+.DS_Store
+Thumbs.db
+
+# Berkas Dokumen Word / Office Temporary
+*.docx
+~$*.docx
+*.doc
