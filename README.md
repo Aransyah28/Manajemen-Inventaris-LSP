@@ -27,12 +27,12 @@ npm run dev
 
 #### Opsi Turso Lokal (Offline / Tanpa Cloud)
 Jika ingin menjalankan database secara lokal, aplikasi ini sudah mendukung **Turso (libSQL) Lokal**. User tidak memerlukan koneksi internet ke Turso Cloud.
-Cukup setel `.env` Anda seperti berikut :
+Cukup setel `.env` seperti berikut :
 ```env
 TURSO_DATABASE_URL="file:local.db"
 TURSO_AUTH_TOKEN=""
 ```
-Ketika Anda menjalankan `npm run db:init`, file database lokal akan otomatis dibuat di folder proyek Anda.
+Ketika menjalankan `npm run db:init`, file database lokal akan otomatis dibuat di folder proyek.
 
 #### Opsi Turso Lokal (Offline / Tanpa Cloud)
 Jika ingin menjalankan database secara lokal, aplikasi ini sudah mendukung **Turso (libSQL) Lokal**. Tidak memerlukan koneksi internet ke Turso Cloud.
